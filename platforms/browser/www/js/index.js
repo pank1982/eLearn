@@ -33,7 +33,8 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+        //app.receivedEvent('deviceready');
+        app.amendLinks('external-link');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -45,5 +46,21 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+
+    // Find everything with class className and open it
+    // with the InAppBrowser
+    amendLinks: function(className) {
+    var n = 0,
+        links = document.getElementsByClassName(className);
+
+    for (; n < links.length; n++) {
+        links[n].onclick = function(e) {
+            e.preventDefault();
+            window.open(''.concat(this.href), '_blank');
+        }
     }
+}
 };
+
+app.initialize();
